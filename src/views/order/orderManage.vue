@@ -130,7 +130,7 @@ const handleEdit = (index: number, row: User) => {
     updateId.value = row.id
     // 保存原始数据
     originalData = { ...row };
-    // 填充表单数据，逐个属性赋值
+    // 填充表单数据，逐个属性赋值。
     form.id = row.id.toString();
     form.roomNo = row.roomNo.toString();
     form.custName = row.custName;
