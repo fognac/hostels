@@ -111,7 +111,7 @@ const dataList = ref([]);//空数组接受data数据
 const fetchData = (page?: number) => {
     // 如果没有指定页码，则使用当前页码
     const curPage = page || queryInfo.currentpage;
-    axios.post('/room/roomAll/', { page: curPage, pageSize: queryInfo.pagesize }).
+    axios.post('hotel/room/roomAll/', { page: curPage, pageSize: queryInfo.pagesize }).
         then((res) => {
             dataList.value = res.data.rooms
             //实时数据个数
@@ -166,7 +166,7 @@ const addDialog = () => {
     if (addForm.value) {
         addForm.value.validate((valid) => {
             if (valid) {
-                axios.post('/room/addRoom', form)
+                axios.post('hotel/room/addRoom', form)
                     .then(res => {
                         // 请求成功处理逻辑
                         fetchData()
@@ -209,7 +209,7 @@ const ChangeDialogVisible = () => {
         price: price || originalData.price,
         facility: facility || originalData.facility
     };
-    axios.post('/room/update/', updatedData).then((res) => {
+    axios.post('hotel/room/update/', updatedData).then((res) => {
         console.log(res.data.rooms);
         DialogVisible.value = false
         fetchData()
@@ -232,7 +232,7 @@ const handleDelete = (index: number, row: User) => {
 
         type: 'warning',
     }).then(() => {
-        axios.post('/room/delete/', { id: row.id }).then((res) => {
+        axios.post('hotel/room/delete/', { id: row.id }).then((res) => {
             fetchData();
             ElMessage({
                 type: 'success',

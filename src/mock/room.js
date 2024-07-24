@@ -17,7 +17,7 @@ let data = Mock.mock({
 })
 
 //请求房间信息数据
-Mock.mock("/room/roomAll/", "post", (options) => {
+Mock.mock("hotel/room/roomAll/", "post", (options) => {
   //三个参数。第一个：路径，第二个：请求方式post/get，第三个：回调，返回值
   const { page, pageSize } = JSON.parse(options.body)
   const start = page * pageSize - pageSize
@@ -31,7 +31,7 @@ Mock.mock("/room/roomAll/", "post", (options) => {
 })
 
 //修改数据
-Mock.mock("/room/update/", "post", (config) => {
+Mock.mock("hotel/room/update/", "post", (config) => {
   const { id, roomNo, kind, price, facility } = JSON.parse(config.body)
   // 获取需要修改的数据id
   console.log(id)
@@ -56,7 +56,7 @@ Mock.mock("/room/update/", "post", (config) => {
 })
 
 //删除数据
-Mock.mock("/room/delete/", "post", (options) => {
+Mock.mock("hotel/room/delete/", "post", (options) => {
   const { id } = JSON.parse(options.body)
   const index = data.rooms.findIndex((room) => room.id === id)
   if (index !== -1) {
@@ -67,27 +67,10 @@ Mock.mock("/room/delete/", "post", (options) => {
   }
 })
 
-// //新增
-// Mock.mock("/room/addRoom", "post", (options) => {
-//   // 解析请求参数
-//   const newRoom = JSON.parse(options.body)
-//   console.log(newRoom)
-//   // 检查 newRoom 是否有对象为空
-//   if (!newRoom.name || !newRoom.capacity || !newRoom.roomNo || !newRoom.price) {
-//     return ElMessage.error("新增内容不能为空")
-//   } else {
-//     // 添加房间ID
-//     newRoom.id = data.rooms.length + 1
-//     // 将新数据添加到 rooms 数组中
-//     data.rooms.push(newRoom)
-//     return {
-//       data: newRoom,
-//     }
-//   }
-// })
+
 
 // 新增
-Mock.mock("/room/addRoom", "post", (options) => {
+Mock.mock("hotel/room/addRoom", "post", (options) => {
   try {
     // 解析请求参数
     const newRoom = JSON.parse(options.body)

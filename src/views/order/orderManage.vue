@@ -2,13 +2,13 @@
     <div>
         <!-- 表单 -->
         <el-table :data="filterTableData" style="width: 100%  ;min-height: 600px;"
-            :default-sort="{ prop: 'roomNo  ', order: 'descending' }">
+            :default-sort="{ prop: 'roomNo', order: 'descending' }">
             <el-table-column label="姓名" prop="custName" />
             <el-table-column label="性别" prop="sex" />
             <el-table-column label="电话" prop="tel" />
             <el-table-column label="支付金额" prop="price" />
             <el-table-column label="房号" prop="roomNo" sortable />
-            <!-- <el-table-column label="预定时间" prop="times" > -->
+
             <el-table-column label="预定时间" sortable>
                 <template #default="scope">
                     <div style="display: flex; align-items: center">
@@ -89,11 +89,10 @@ const queryInfo = reactive({
 
 const dataList = ref([]);//空数组接受data数据
 const fetchData = (page?: number) => {
-    console.log("发送");
     // 如果没有指定页码，则使用当前页码
     const curPage = page || queryInfo.currentpage;
     // 发送HTTP请求，实际上会被Mock拦截并返回模拟数据
-    axios.post("/order/orderAll/", { page: curPage, pageSize: queryInfo.pagesize }).
+    axios.post("hotel/order/orderAll/", { page: curPage, pageSize: queryInfo.pagesize }).
         then((res) => {
             dataList.value = res.data.orders
             //实时数据个数
@@ -150,7 +149,7 @@ const ChangeDialogVisible = () => {
         times: times || originalData.times
     };
 
-    axios.post('/order/update/', updatedData).then((res) => {
+    axios.post('hotel/order/update/', updatedData).then((res) => {
         console.log("请求修改的数据:");
         console.log(res.data.orders);
         DialogVisible.value = false
@@ -174,7 +173,7 @@ const handleDelete = (index: number, row: User) => {
 
         type: 'warning',
     }).then(() => {
-        axios.post('/order/delete/', { id: row.id }).then((res) => {
+        axios.post('hotel/order/delete/', { id: row.id }).then((res) => {
             fetchData();
             ElMessage({
                 type: 'success',

@@ -46,7 +46,7 @@ let data = Mock.mock({
 })
 
 //请求数据
-Mock.mock("/order/orderAll/", "post", (options) => {
+Mock.mock("hotel/order/orderAll/", "post", (options) => {
   //三个参数。第一个：路径，第二个：请求方式post/get，第三个：回调，返回值
   const { page, pageSize } = JSON.parse(options.body)
   const start = page * pageSize - pageSize
@@ -60,7 +60,7 @@ Mock.mock("/order/orderAll/", "post", (options) => {
 })
 
 //修改数据
-Mock.mock("/order/update/", "post", (config) => {
+Mock.mock("hotel/order/update/", "post", (config) => {
   const { id, roomNo, custName, price, times } = JSON.parse(config.body)
   // 获取需要修改的数据id
   const targetBookIndex = data.orders.findIndex((item) => item.id === id)
@@ -84,7 +84,7 @@ Mock.mock("/order/update/", "post", (config) => {
 })
 
 //删除数据
-Mock.mock("/order/delete/", "post", (options) => {
+Mock.mock("hotel/order/delete/", "post", (options) => {
   const { id } = JSON.parse(options.body)
   const index = data.orders.findIndex((order) => order.id === id)
   if (index !== -1) {
