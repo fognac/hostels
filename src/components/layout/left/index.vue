@@ -1,4 +1,3 @@
-
 <template>
     <div class="leftNav">
         <el-col :span="12">
@@ -22,9 +21,9 @@
                         <el-icon>
                             <document />
                         </el-icon>
-                        <span>公告管理</span>
+                        <span>旅店信息</span>
                     </template>
-                    <el-menu-item index="ioBook">评价</el-menu-item>
+                    <el-menu-item index="ioBook">基础信息</el-menu-item>
                     <el-menu-item index="reservation">222</el-menu-item>
                 </el-sub-menu>
                 <!-- 报表统计：生成借阅情况统计报表、图书流通情况报表、读者借阅排行榜等，为图书馆管理者提供数据支持 -->
@@ -37,15 +36,12 @@
             </el-menu>
         </el-col>
     </div>
-
     <div>
     </div>
 </template>
 
 
 <script lang="ts" setup>
-import { useRoute } from 'vue-router'
-const route = useRoute()
 </script>
 <style scoped>
 .leftNav {
@@ -59,8 +55,6 @@ const route = useRoute()
     border-collapse: collapse;
     color: white;
 }
-
-
 
 /* 二级导航 */
 .el-icon {

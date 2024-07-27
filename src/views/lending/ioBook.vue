@@ -1,13 +1,15 @@
 <template>
-    <div class="box">借书还书</div>
+    <div class="box">123</div>
 </template>
 
 <script>
 
 </script>
-<style  scoped>
+<style scoped>
 .box {
-    height: 98%;
-    border: 1px solid rgb(201, 201, 201);
+    font-size: 16px;
+    height: 100%;
+    width: 100%;
+    border: 1px solid rgb(205, 205, 205);
 }
 </style>

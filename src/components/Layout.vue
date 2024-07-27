@@ -7,7 +7,7 @@ imageViewerEmits
 </script>
 
 <template>
-  <div class="common-layout" style="margin:0px">
+  <div class="common-layout">
     <el-container>
       <!-- 顶部 -->
       <el-header class="header clearfix">
@@ -41,6 +41,12 @@ imageViewerEmits
   padding: 0px;
 }
 
+.common-layout {
+  top: 0;
+  left: 0;
+  position: relative;
+}
+
 .clearfix::after {
   content: "";
   display: block;
@@ -49,6 +55,7 @@ imageViewerEmits
 
 /* 顶部 */
 .header {
+  position: relative;
   width: 100%;
   margin-top: 0;
   height: 80px;
@@ -77,6 +84,7 @@ imageViewerEmits
 
 /* 底部内容版区 导航背景*/
 .container {
+  position: relative;
   height: calc(100vh - 110px);
 }
 
@@ -84,12 +92,14 @@ imageViewerEmits
 .aside {
   box-shadow: 2px 2px 10px 2px rgb(195, 195, 195);
   background-color: #5e5c64;
-  margin-right: 15px;
+  margin-right: 10px;
   color: white;
+  position: relative;
 }
 
 /* 中心内容样式 */
 .contain {
+  position: relative;
   background-color: #ffffff;
   padding: 20px;
   box-shadow: 2px 2px 10px 2px rgb(195, 195, 195);
