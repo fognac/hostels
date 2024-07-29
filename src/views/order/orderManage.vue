@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class='box'>
         <!-- 表单 -->
         <el-table :data="filterTableData" style="width: 100%  ;min-height: 600px;"
             :default-sort="{ prop: 'roomNo', order: 'descending' }">
@@ -203,6 +203,11 @@ const handleCurrentChange = (newVal: number) => {
 </script>
 
 <style>
+.box {
+    background-color: white;
+    height: 100%;
+}
+
 .demo-form-inline .el-input {
     --el-input-width: 220px;
 }

@@ -37,14 +37,8 @@ imageViewerEmits
 
 <style scoped>
 * {
-  margin: 0px;
-  padding: 0px;
-}
-
-.common-layout {
-  top: 0;
-  left: 0;
-  position: relative;
+  margin: 0;
+  padding: 0;
 }
 
 .clearfix::after {
@@ -57,10 +51,8 @@ imageViewerEmits
 .header {
   position: relative;
   width: 100%;
-  margin-top: 0;
   height: 80px;
   background-color: #5e5c64;
-  margin-bottom: 10px;
   overflow: hidden;
   box-shadow: 2px 2px 10px 2px rgb(195, 195, 195);
 }
@@ -80,28 +72,30 @@ imageViewerEmits
   margin-left: 20px;
   margin-right: 80px;
   float: right;
+  display: inline-block;
 }
 
 /* 底部内容版区 导航背景*/
 .container {
   position: relative;
-  height: calc(100vh - 110px);
+  height: calc(100vh - 100px);
+  width: 100%;
+  background-color: rgb(223, 223, 223);
+  padding-top: 10px
 }
 
 /* 侧边栏 */
 .aside {
   box-shadow: 2px 2px 10px 2px rgb(195, 195, 195);
   background-color: #5e5c64;
-  margin-right: 10px;
   color: white;
   position: relative;
+  height: 100%;
+  margin-right: 10px;
 }
 
 /* 中心内容样式 */
 .contain {
-  position: relative;
-  background-color: #ffffff;
-  padding: 20px;
   box-shadow: 2px 2px 10px 2px rgb(195, 195, 195);
 }
 </style>

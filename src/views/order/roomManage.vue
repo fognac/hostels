@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class='box'>
         <!-- 表单 -->
         <el-table :data="filterTableData" style="width: 100%  ;min-height: 600px;"
             :default-sort="{ prop: 'roomNo', order: 'ascending' }">
@@ -27,7 +27,7 @@
         </el-table>
         <!-- 分页 -->
         <div class="demo-pagination-block" style="margin-left: 35%;">
-            <el-pagination :current-page="queryInfo.currentpage" :page-size="queryInfo.pagesize" small="small"
+            <el-pagination :current-page="queryInfo.currentpage" :page-size="queryInfo.pagesize" small="default"
                 layout="total, prev, pager, next, jumper" :total="total" @current-change="handleCurrentChange" />
         </div>
         <!-- 修改弹窗 -->
@@ -263,6 +263,12 @@ const handleCurrentChange = (newVal: number) => {
 </script>
 
 <style>
+.box {
+
+    background-color: white;
+    height: 100%;
+}
+
 .demo-form-inline .el-input {
     --el-input-width: 220px;
 }
