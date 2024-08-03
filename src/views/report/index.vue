@@ -10,12 +10,16 @@
                 <div>4</div>
             </div>
             <div class="topRight">
-                <el-carousel height="100%" autoplay>
-                    <el-carousel-item>
-                        <img src="../../../public/pic/item1.jpg" alt="carousel image"
+
+                <el-carousel autoplay>
+                    <el-carousel-item v-for='item in pic.list' :key='item.index'>
+                        <img :src="item.src" alt="carousel image" style="height: 100%; width: 100%;">
+                        <img src="../../../public/pic/item2.jpg" alt="carousel image"
                             style="width: 10px; height: 100px;">
                     </el-carousel-item>
                 </el-carousel>
+
+
             </div>
         </div>
         <div class='bottom'>
@@ -38,13 +42,13 @@
                         </el-icon></span></div>
                 <div class='comments'>
                     <div>
-                        <img src='../../../public/a.jpg'><i>id</i>
+                        <img src='../../../public/a.jpg'><i>id123456</i>
                         <span>评论1</span>
                     </div>
-                    <div><img src='../../../public/a.jpg'><i>id</i>
+                    <div><img src='../../../public/a.jpg'><i>id123456</i>
                         <span>评论1</span>
                     </div>
-                    <div> <img src='../../../public/a.jpg'><i>id</i>
+                    <div> <img src='../../../public/a.jpg'><i>id123456</i>
                         <span>评论1</span>
                     </div>
 
@@ -52,13 +56,15 @@
             </div>
             <!-- 第三个盒子 -->
             <div>
-                <div>用户统计<span>统计最近7日数据</span></div>
+                <div class="title"><span>用户统计</span><el-icon color='#ccc'>
+                        <Refresh />
+                    </el-icon>
+                    <span class='tipmMsg' style='color: darkgrey; font-size: small;'>记录最近7日数据</span>
+                </div>
                 <div>123</div>
             </div>
         </div>
     </div>
-
-
 </template>
 
 <script setup>
@@ -120,12 +126,9 @@ const pic = ref({
 }
 
 .topRight {
-    border: 1px solid red;
     width: 60%;
     height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background-color: white;
     margin-left: 10px;
 }
 
@@ -149,7 +152,7 @@ const pic = ref({
     vertical-align: top;
 }
 
-
+/* 第一个 */
 .bottom>div .title {
     position: relative;
     height: 20px;
@@ -160,11 +163,10 @@ const pic = ref({
     float: right;
 }
 
+/* 第二个 */
 .comments {
     width: 100%;
     height: 230px;
-    overflow: auto;
-
 }
 
 .comments div {
@@ -173,24 +175,22 @@ const pic = ref({
     width: 100%;
     height: auto;
     display: flex;
-    /* 使用 flex 布局 */
-    justify-content: space-between;
-    /* 左右对齐 */
+    justify-content: flex-start;
     align-items: flex-end;
-    /* 底部对齐 */
 }
 
 .comments img {
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    margin-right: 10px;
+    margin-right: 15px;
 }
 
 /* 评论id和文字  */
 .comments span {
     font-size: 16px;
     color: rgb(87, 79, 79);
+    position: relative;
 
 }
 
@@ -198,8 +198,9 @@ const pic = ref({
     font-size: 12px;
     color: rgb(87, 79, 79);
     align-self: flex-start;
-    /* 图片和 id 顶部对齐 */
     margin-bottom: auto;
-    /* 确保 id 底部与评论文本对齐 */
 }
+
+/* 第三个盒子 */
+.tipmMsg {}
 </style>
