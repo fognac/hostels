@@ -3,19 +3,17 @@
         <div class='top'>
             <div class="topLeft">
                 <div>
-                    <div class='msg'>♥阅览量1234</div>
+                    <div class='msg'><img src='../../../public/pic/aixin.png'><span>阅览量</span><span>1234</span></div>
                 </div>
                 <div>2</div>
                 <div>3</div>
                 <div>4</div>
             </div>
             <div class="topRight">
-
                 <el-carousel autoplay>
                     <el-carousel-item v-for='item in pic.list' :key='item.index'>
                         <img :src="item.src" alt="carousel image" style="height: 100%; width: 100%;">
-                        <img src="../../../public/pic/item2.jpg" alt="carousel image"
-                            style="width: 10px; height: 100px;">
+
                     </el-carousel-item>
                 </el-carousel>
 
@@ -37,36 +35,43 @@
             </div>
             <!-- 第二个盒子 -->
             <div>
-                <div class="title"><span>最新评价</span><span class='refrush'><el-icon color='#ccc'>
+                <div class="title"><span>最新评价</span>
+                    <span class='refrush'>
+                        <el-icon color='#ccc'>
                             <Refresh />
-                        </el-icon></span></div>
+                        </el-icon>
+                    </span>
+                </div>
                 <div class='comments'>
                     <div>
-                        <img src='../../../public/a.jpg'><i>id123456</i>
-                        <span>评论1</span>
+                        <img src='../../../public/a.jpg'>
+                        <i>id123</i>
+                        <span>下雨</span>
                     </div>
-                    <div><img src='../../../public/a.jpg'><i>id123456</i>
-                        <span>评论1</span>
+                    <div>
+                        <img src='../../../public/a.jpg'>
+                        <i>id12345</i>
+                        <span>天晴</span>
                     </div>
-                    <div> <img src='../../../public/a.jpg'><i>id123456</i>
-                        <span>评论1</span>
+                    <div>
+                        <img src='../../../public/a.jpg'>
+                        <i>id156543353455</i>
+                        <span>多云转晴</span>
                     </div>
-
                 </div>
             </div>
             <!-- 第三个盒子 -->
             <div>
-                <div class="title"><span>用户统计</span><el-icon color='#ccc'>
+                <div class="title"><span>用户统计</span><el-icon color='#ccc' class='refrush'>
                         <Refresh />
                     </el-icon>
-                    <span class='tipmMsg' style='color: darkgrey; font-size: small;'>记录最近7日数据</span>
+                    <span class='tipmMsg' style='color: darkgrey;'>记录最近7日数据</span>
                 </div>
-                <div>123</div>
+                <div class='ects'>123456789</div>
             </div>
         </div>
     </div>
 </template>
-
 <script setup>
 import { ref } from 'vue'
 const pic = ref({
@@ -75,7 +80,9 @@ const pic = ref({
         { index: 2, src: "../../../public/pic/item2.jpg" }, {
             index: 3, src: "../../../public/pic/item3.jpg"
         }]
-}) </script>
+})
+
+</script>
 
 <style scoped>
 * {
@@ -84,7 +91,7 @@ const pic = ref({
     box-sizing: border-box;
 }
 
-/* 内容区 */
+/* 内容区面板 */
 .contain {
     width: 100%;
     height: 100%;
@@ -121,8 +128,19 @@ const pic = ref({
 }
 
 .msg {
-    width: 100%;
-    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+}
+
+.msg img {
+    width: 50px;
+    height: 50px;
+}
+
+.msg span {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .topRight {
@@ -159,6 +177,11 @@ const pic = ref({
     width: 100%;
 }
 
+.title .tipmMsg {
+    display: flex;
+    font-size: 10px
+}
+
 .refrush {
     float: right;
 }
@@ -173,34 +196,36 @@ const pic = ref({
     padding: 10px;
     /* 增加内边距 */
     width: 100%;
-    height: auto;
+    height: 33%;
     display: flex;
     justify-content: flex-start;
-    align-items: flex-end;
+    align-items: center;
+    position: relative;
 }
 
 .comments img {
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     margin-right: 15px;
+    position: relative;
 }
 
-/* 评论id和文字  */
+/* 评论文字  */
 .comments span {
+    position: absolute;
     font-size: 16px;
+    left: 68px;
+}
+
+.comments i {
+    font-size: 12px;
+    align-self: flex-start;
+    margin: 0px;
     color: rgb(87, 79, 79);
     position: relative;
 
 }
 
-.comments i {
-    font-size: 12px;
-    color: rgb(87, 79, 79);
-    align-self: flex-start;
-    margin-bottom: auto;
-}
-
 /* 第三个盒子 */
-.tipmMsg {}
 </style>
