@@ -1,17 +1,23 @@
 <template>
     <div class='box'>
+        <div class='topTitle'>
+            <el-input v-model="search" style="width: 240px" placeholder="搜索房间号/姓名" clearable size="small" />
+            <el-button :icon="Search" type="primary" size="small" round>搜索</el-button>
+            <el-button type="danger" :icon="Delete" size="small" round disabled>批量删除</el-button>
+        </div>
         <!-- 表单 -->
-        <el-table :data="filterTableData" style="width: 100%  ;min-height: 600px;"
-            :default-sort="{ prop: 'roomNo', order: 'descending' }">
-            <el-table-column label="姓名" prop="custName" />
-            <el-table-column label="性别" prop="sex" />
-            <el-table-column label="电话" prop="tel" />
-            <el-table-column label="支付金额" prop="price" />
-            <el-table-column label="房号" prop="roomNo" sortable />
+        <el-table :data="filterTableData" style="width: 100% ;min-height: 550px;" border
+            :default-sort="{ prop: 'roomNo', order: 'descending' }" fit="false">
+            <el-table-column type="selection" width="50px" align="center" />
+            <el-table-column label="姓名" prop="custName" width="120px" align="center" />
+            <el-table-column label="性别" prop="sex" width="80px" align="center" />
+            <el-table-column label="电话" prop="tel" width="180px" align="center" />
+            <el-table-column label="支付金额" prop="price" width="100px" align="center" />
+            <el-table-column label="房号" prop="roomNo" sortable width="100px" align="center" />
 
-            <el-table-column label="预定时间" sortable>
+            <el-table-column label="预定时间" sortable width="auto" align="center">
                 <template #default="scope">
-                    <div style="display: flex; align-items: center">
+                    <div style="display: flex; align-items: center;justify-content: center;">
                         <el-icon>
                             <timer />
                         </el-icon>
@@ -19,20 +25,18 @@
                     </div>
                 </template>
             </el-table-column>
-            <el-table-column align="right">
-                <template #header>
-                    <el-input v-model="search" size="small" placeholder="搜索客户/房间号" />
-                </template>
+            <el-table-column align="center" width="200px" label="操作">
                 <!-- 按钮 -->
                 <template #default="scope">
-                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)" round>编辑</el-button>
+                    <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)"
+                        round>删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
         <!-- 分页 -->
         <div class="demo-pagination-block" style="margin-left: 35%;">
-            <el-pagination :current-page="queryInfo.currentpage" :page-size="queryInfo.pagesize" small="small"
+            <el-pagination :current-page="queryInfo.currentpage" :page-size="queryInfo.pagesize" small
                 layout="total, prev, pager, next, jumper" :total="total" @current-change="handleCurrentChange" />
         </div>
         <!-- 修改弹窗 -->
@@ -69,39 +73,42 @@
 import { computed, reactive, ref, onMounted } from 'vue'
 import axios from 'axios';
 import { ElMessageBox, ElMessage } from 'element-plus';
+import { Search, Delete } from '@element-plus/icons-vue'
 
-const total = ref(0)
 //数据接口
 interface User {
     id: number,
-    tel: number
-    roomNo: number
-    custName: string
-    price: string
+    tel: number,
+    roomNo: number,
+    custName: string,
+    price: string,
     times: string
 }
 
 const queryInfo = reactive({
-    query: '', // 查询参数
     currentpage: 1, // 当前页码
     pagesize: 8 // 每页显示条数
 })
 
+
+
+const total = ref(0)
 const dataList = ref([]);//空数组接受data数据
 const fetchData = (page?: number) => {
     // 如果没有指定页码，则使用当前页码
     const curPage = page || queryInfo.currentpage;
-    // 发送HTTP请求，实际上会被Mock拦截并返回模拟数据
-    axios.post("hotel/order/orderAll/", { page: curPage, pageSize: queryInfo.pagesize }).
+    axios.post('hotel/order/orderAll/', { page: curPage, pageSize: queryInfo.pagesize }).
         then((res) => {
             dataList.value = res.data.orders
-            //实时数据个数
             total.value = res.data.total
-        }).catch(error => console.log("房间数据请求失败" + error))
+            console.log(123)
+        }).catch(error => console.log("订单数据请求失败" + error))
 }
 
 // 实现列表搜索 无搜索状态显示所有数据
 const search = ref('')
+console.log(dataList.value);
+
 const filterTableData = computed(() =>
     dataList.value.filter(
         (data) =>
@@ -109,6 +116,7 @@ const filterTableData = computed(() =>
             data.roomNo.includes(search.value) || data.custName.includes(search.value)
     )
 )
+
 
 
 const form = reactive({
@@ -188,17 +196,15 @@ const handleDelete = (index: number, row: User) => {
     })
 }
 
-onMounted(() => {
-    fetchData()
-})
-
 
 // 监听 页码值 改变
 const handleCurrentChange = (newVal: number) => {
     queryInfo.currentpage = newVal
     fetchData()
 }
-
+onMounted(() => {
+    fetchData()
+})
 
 </script>
 
@@ -206,6 +212,12 @@ const handleCurrentChange = (newVal: number) => {
 .box {
     background-color: white;
     height: 100%;
+}
+
+.topTitle {
+    width: 100%;
+    height: 50px;
+    left: 10px;
 }
 
 .demo-form-inline .el-input {

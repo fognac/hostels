@@ -1,7 +1,7 @@
 <template>
     <div class='box'>
         <!-- 表单 -->
-        <el-table :data="filterTableData" style="width: 100%  ;min-height: 600px;"
+        <el-table :data="filterTableData" style="width: 100%  ;min-height: 550px;"
             :default-sort="{ prop: 'roomNo', order: 'ascending' }">
             <el-table-column label="房号" prop="roomNo" sortable />
             <el-table-column label="类型" prop="kind" />
@@ -27,7 +27,7 @@
         </el-table>
         <!-- 分页 -->
         <div class="demo-pagination-block" style="margin-left: 35%;">
-            <el-pagination :current-page="queryInfo.currentpage" :page-size="queryInfo.pagesize" small="default"
+            <el-pagination :current-page="queryInfo.currentpage" :page-size="queryInfo.pagesize" small
                 layout="total, prev, pager, next, jumper" :total="total" @current-change="handleCurrentChange" />
         </div>
         <!-- 修改弹窗 -->
@@ -90,6 +90,10 @@ import { computed, reactive, ref, onMounted } from 'vue'
 import axios from 'axios';
 import { ElMessageBox, ElMessage, FormRules } from 'element-plus';
 
+onMounted(() => {
+    fetchData()
+})
+
 const total = ref(0)
 //数据接口
 interface User {
@@ -102,10 +106,11 @@ interface User {
 }
 
 const queryInfo = reactive({
-    query: '', // 查询参数
     currentpage: 1, // 当前页码
     pagesize: 10 // 每页显示条数
 })
+
+
 
 const dataList = ref([]);//空数组接受data数据
 const fetchData = (page?: number) => {
@@ -119,15 +124,20 @@ const fetchData = (page?: number) => {
         }).catch(error => console.log("房间数据请求失败" + error))
 }
 
+
+
+
 // 实现列表搜索 无搜索状态显示所有数据
 const search = ref('')
 const filterTableData = computed(() =>
     dataList.value.filter(
         (data) =>
             !search.value ||
-            data.facility.includes(search.value) || data.roomNo.includes(search.value)
+            data.roomNo.includes(search.value)
     )
 )
+
+
 
 const form = reactive({
     id: '',
@@ -246,11 +256,6 @@ const handleDelete = (index: number, row: User) => {
         })
     })
 }
-
-
-onMounted(() => {
-    fetchData()
-})
 
 
 // 监听 页码值 改变
