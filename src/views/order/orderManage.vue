@@ -3,11 +3,12 @@
         <div class='topTitle'>
             <el-input v-model="search" style="width: 240px" placeholder="搜索房间号/姓名" clearable size="small" />
             <el-button :icon="Search" type="primary" size="small" round>搜索</el-button>
-            <el-button type="danger" :icon="Delete" size="small" round disabled>批量删除</el-button>
+            <el-button type="danger" :icon="Delete" size="small" round :disabled="delsBtn">批量删除</el-button>
         </div>
         <!-- 表单 -->
-        <el-table :data="filterTableData" style="width: 100% ;min-height: 550px;" border
-            :default-sort="{ prop: 'roomNo', order: 'descending' }" fit="false">
+        <el-table :data="filterTableData" style="width: 100% ;min-height: 500px;" border
+            :default-sort="{ prop: 'roomNo', order: 'descending' }" fit="false"
+            @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="50px" align="center" />
             <el-table-column label="姓名" prop="custName" width="120px" align="center" />
             <el-table-column label="性别" prop="sex" width="80px" align="center" />
@@ -18,9 +19,6 @@
             <el-table-column label="预定时间" sortable width="auto" align="center">
                 <template #default="scope">
                     <div style="display: flex; align-items: center;justify-content: center;">
-                        <el-icon>
-                            <timer />
-                        </el-icon>
                         <span style="margin-left: 10px">{{ scope.row.times }}</span>
                     </div>
                 </template>
@@ -70,7 +68,7 @@
 
 
 <script lang="ts" setup>
-import { computed, reactive, ref, onMounted } from 'vue'
+import { computed, reactive, ref, onMounted, watch } from 'vue'
 import axios from 'axios';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import { Search, Delete } from '@element-plus/icons-vue'
@@ -87,7 +85,7 @@ interface User {
 
 const queryInfo = reactive({
     currentpage: 1, // 当前页码
-    pagesize: 8 // 每页显示条数
+    pagesize: 10 // 每页显示条数
 })
 
 
@@ -101,13 +99,11 @@ const fetchData = (page?: number) => {
         then((res) => {
             dataList.value = res.data.orders
             total.value = res.data.total
-            console.log(123)
         }).catch(error => console.log("订单数据请求失败" + error))
 }
 
 // 实现列表搜索 无搜索状态显示所有数据
 const search = ref('')
-console.log(dataList.value);
 
 const filterTableData = computed(() =>
     dataList.value.filter(
@@ -196,6 +192,16 @@ const handleDelete = (index: number, row: User) => {
     })
 }
 
+//批量删除
+const delsBtn = ref(true);
+const multipleSelection = ref<User[]>([])
+const handleSelectionChange = (val: User[]) => {
+    multipleSelection.value = val;
+    delsBtn.value = multipleSelection.value.length > 0;
+}
+watch(multipleSelection, (newVal) => {
+    delsBtn.value = !(newVal.length > 0);
+});
 
 // 监听 页码值 改变
 const handleCurrentChange = (newVal: number) => {
@@ -218,6 +224,9 @@ onMounted(() => {
     width: 100%;
     height: 50px;
     left: 10px;
+    display: flex;
+    align-items: center;
+
 }
 
 .demo-form-inline .el-input {
