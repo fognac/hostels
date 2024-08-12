@@ -3,12 +3,12 @@
         <div class='topTitle'>
             <el-input v-model="search" style="width: 240px" placeholder="搜索房间号/姓名" clearable size="small" />
             <el-button :icon="Search" type="primary" size="small" round>搜索</el-button>
-            <el-button type="danger" :icon="Delete" size="small" round :disabled="delsBtn">批量删除</el-button>
+            <el-button type="danger" :icon="Delete" size="small" round :disabled="delsBtn"
+                @click='handleBatchDelete'>批量删除</el-button>
         </div>
         <!-- 表单 -->
         <el-table :data="filterTableData" style="width: 100% ;min-height: 500px;" border
-            :default-sort="{ prop: 'roomNo', order: 'descending' }" fit="false"
-            @selection-change="handleSelectionChange">
+            :default-sort="{ prop: 'roomNo', order: 'descending' }" @selection-change="handleSelectionChange">
             <el-table-column type="selection" width="50px" align="center" />
             <el-table-column label="姓名" prop="custName" width="120px" align="center" />
             <el-table-column label="性别" prop="sex" width="80px" align="center" />
@@ -27,7 +27,7 @@
                 <!-- 按钮 -->
                 <template #default="scope">
                     <el-button size="small" @click="handleEdit(scope.$index, scope.row)" round>编辑</el-button>
-                    <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)"
+                    <el-button size="small" type="danger" @click="handleSingleDelete(scope.$index, scope.row)"
                         round>删除</el-button>
                 </template>
             </el-table-column>
@@ -169,36 +169,62 @@ const cls = () => {
     }
     originalData = null;
 }
-//删除数据
-const handleDelete = (index: number, row: User) => {
-    ElMessageBox.confirm('是否确认删除?', '提示', {
+// 删除数据
+const handleDelete = (ids: number[]) => {
+    ElMessageBox.confirm('是否确认删除选中的项?', '提示', {
         cancelButtonText: '取消',
         confirmButtonText: '确定',
-
         type: 'warning',
     }).then(() => {
-        axios.post('hotel/order/delete/', { id: row.id }).then((res) => {
-            fetchData();
+        axios.post('hotel/order/delete/', { ids }).then((res) => {
+            fetchData();  // 刷新数据
             ElMessage({
                 type: 'success',
-                message: '删除成功'
-            })
-        })
+                message: ids.length > 1 ? '批量删除成功' : '删除成功'
+            });
+        }).catch(() => {
+            ElMessage({
+                type: 'error',
+                message: '删除失败'
+            });
+        });
     }).catch(() => {
         ElMessage({
             type: 'info',
             message: '已取消'
-        })
-    })
-}
+        });
+    });
+};
+
+// 单项删除
+const handleSingleDelete = (index: number, row: User) => {
+    handleDelete([row.id]);
+};
 
 //批量删除
 const delsBtn = ref(true);
 const multipleSelection = ref<User[]>([])
 const handleSelectionChange = (val: User[]) => {
     multipleSelection.value = val;
+    console.log('选中的项:', multipleSelection.value);
     delsBtn.value = multipleSelection.value.length > 0;
 }
+
+
+// 批量删除
+const handleBatchDelete = () => {
+    if (multipleSelection.value.length === 0) {
+        ElMessage({
+            type: 'warning',
+            message: '请选择要删除的项'
+        });
+        return;
+    }
+
+    const ids = multipleSelection.value.map(user => user.id);
+    handleDelete(ids);
+};
+
 watch(multipleSelection, (newVal) => {
     delsBtn.value = !(newVal.length > 0);
 });

@@ -83,14 +83,15 @@ Mock.mock("hotel/order/update/", "post", (config) => {
   }
 })
 
-//删除数据
+//删除
 Mock.mock("hotel/order/delete/", "post", (options) => {
-  const { id } = JSON.parse(options.body)
-  const index = data.orders.findIndex((order) => order.id === id)
-  if (index !== -1) {
-    data.orders.splice(index, 1)
-  }
+  const { ids } = JSON.parse(options.body); 
+  const deletedIds = new Set(ids); // 使用 Set 以便更快的查找
+
+  // 过滤掉需要删除的订单
+  data.orders = data.orders.filter((order) => !deletedIds.has(order.id));
+
   return {
     success: true,
-  }
-})
+  };
+});
