@@ -59,6 +59,14 @@ Mock.mock("hotel/order/orderAll/", "post", (options) => {
   }
 })
 
+// Mock接口返回所有订单数据
+Mock.mock("hotel/order/all/", "get", () => {
+  return {
+    orders: data.orders,
+    total: data.orders.length,
+  };
+});
+
 //修改数据
 Mock.mock("hotel/order/update/", "post", (config) => {
   const { id, roomNo, custName, price, times } = JSON.parse(config.body)

@@ -72,6 +72,7 @@ import { computed, reactive, ref, onMounted, watch } from 'vue'
 import axios from 'axios';
 import { ElMessageBox, ElMessage } from 'element-plus';
 import { Search, Delete } from '@element-plus/icons-vue'
+import { localStorageService } from "../../assets/api/LocalStroge.js"
 
 //数据接口
 interface User {
@@ -88,8 +89,21 @@ const queryInfo = reactive({
     pagesize: 10 // 每页显示条数
 })
 
+// 从 localStorage 恢复数据
+const restoreFromLocalStorage = () => {
+    const storedData = localStorageService.get('ordersData')
+    if (storedData) {
+        dataList.value = storedData.orders
+        total.value = storedData.total
+    }
+}
 
+// 保存数据到 localStorage
+const saveToLocalStorage = (data) => {
+    localStorageService.save('ordersData', data)
+}
 
+//请求数据
 const total = ref(0)
 const dataList = ref([]);//空数组接受data数据
 const fetchData = (page?: number) => {
@@ -99,12 +113,12 @@ const fetchData = (page?: number) => {
         then((res) => {
             dataList.value = res.data.orders
             total.value = res.data.total
+            saveToLocalStorage(res.data)
         }).catch(error => console.log("订单数据请求失败" + error))
 }
 
 // 实现列表搜索 无搜索状态显示所有数据
 const search = ref('')
-
 const filterTableData = computed(() =>
     dataList.value.filter(
         (data) =>
@@ -113,7 +127,13 @@ const filterTableData = computed(() =>
     )
 )
 
-
+// 初始化数据
+onMounted(() => {
+    restoreFromLocalStorage() // 从 localStorage 恢复数据
+    if (dataList.value.length === 0) {
+        fetchData() // 如果 localStorage 中没有数据，发起请求
+    }
+})
 
 const form = reactive({
     id: "",
@@ -206,12 +226,11 @@ const delsBtn = ref(true);
 const multipleSelection = ref<User[]>([])
 const handleSelectionChange = (val: User[]) => {
     multipleSelection.value = val;
-    console.log('选中的项:', multipleSelection.value);
     delsBtn.value = multipleSelection.value.length > 0;
 }
 
 
-// 批量删除
+// 批量删除按钮事件
 const handleBatchDelete = () => {
     if (multipleSelection.value.length === 0) {
         ElMessage({
@@ -220,7 +239,6 @@ const handleBatchDelete = () => {
         });
         return;
     }
-
     const ids = multipleSelection.value.map(user => user.id);
     handleDelete(ids);
 };
@@ -234,9 +252,7 @@ const handleCurrentChange = (newVal: number) => {
     queryInfo.currentpage = newVal
     fetchData()
 }
-onMounted(() => {
-    fetchData()
-})
+
 
 </script>
 

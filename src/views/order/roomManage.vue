@@ -89,10 +89,7 @@
 import { computed, reactive, ref, onMounted } from 'vue'
 import axios from 'axios';
 import { ElMessageBox, ElMessage, FormRules } from 'element-plus';
-
-onMounted(() => {
-    fetchData()
-})
+import { localStorageService } from "../../assets/api/LocalStroge.js"
 
 const total = ref(0)
 //数据接口
@@ -110,7 +107,26 @@ const queryInfo = reactive({
     pagesize: 10 // 每页显示条数
 })
 
+onMounted(() => {
+    restoreFromLocalStorage() // 从 localStorage 恢复数据
+    if (dataList.value.length === 0) {
+        fetchData() // 如果 localStorage 中没有数据，发起请求
+    }
+})
 
+// 从 localStorage 恢复数据
+const restoreFromLocalStorage = () => {
+    const storedData = localStorageService.get('roomsData')
+    if (storedData) {
+        dataList.value = storedData.rooms
+        total.value = storedData.total
+    }
+}
+
+// 保存数据到 localStorage
+const saveToLocalStorage = (data) => {
+    localStorageService.save('roomsData', data)
+}
 
 const dataList = ref([]);//空数组接受data数据
 const fetchData = (page?: number) => {
@@ -119,12 +135,10 @@ const fetchData = (page?: number) => {
     axios.post('hotel/room/roomAll/', { page: curPage, pageSize: queryInfo.pagesize }).
         then((res) => {
             dataList.value = res.data.rooms
-            //实时数据个数
             total.value = res.data.total
+            saveToLocalStorage(res.data)
         }).catch(error => console.log("房间数据请求失败" + error))
 }
-
-
 
 
 // 实现列表搜索 无搜索状态显示所有数据
@@ -137,8 +151,6 @@ const filterTableData = computed(() =>
     )
 )
 
-
-
 const form = reactive({
     id: '',
     roomNo: '',
@@ -148,20 +160,21 @@ const form = reactive({
     facility: ''
 })
 
-const rules = reactive<FormRules<typeof form>>({
-    roomNo: [
-        { required: true, message: '请输入房间号', trigger: 'blur' }
-    ],
-    kind: [
-        { required: true, message: '请输入类型', trigger: 'blur' }
-    ],
-    price: [
-        { required: true, message: '请输入价格', trigger: 'blur' }
-    ],
-    facility: [
-        { required: true, message: '请输入设施', trigger: 'blur' }
-    ]
-})
+const rules = reactive<FormRules<typeof form>>(
+    {
+        roomNo: [
+            { required: true, message: '请输入房间号', trigger: 'blur' }
+        ],
+        kind: [
+            { required: true, message: '请输入类型', trigger: 'blur' }
+        ],
+        price: [
+            { required: true, message: '请输入价格', trigger: 'blur' }
+        ],
+        facility: [
+            { required: true, message: '请输入设施', trigger: 'blur' }
+        ]
+    })
 
 //新增数据
 const addDialogVisible = ref(false)
@@ -208,6 +221,7 @@ const handleEdit = (index: number, row: User) => {
     form.facility = row.facility;
 }
 
+//修改数据
 const ChangeDialogVisible = () => {
     if (!originalData) return;
     const { roomNo, kind, price, facility } = form;
