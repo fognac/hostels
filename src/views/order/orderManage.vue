@@ -66,7 +66,6 @@
     </div>
 </template>
 
-
 <script lang="ts" setup>
 import { computed, reactive, ref, onMounted, watch } from 'vue'
 import axios from 'axios';
@@ -85,8 +84,8 @@ interface User {
 }
 
 const queryInfo = reactive({
-    currentpage: 1, // 当前页码
-    pagesize: 10 // 每页显示条数
+    currentpage: 1,
+    pagesize: 10
 })
 
 // 从 localStorage 恢复数据
