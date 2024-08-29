@@ -103,8 +103,8 @@ const saveToLocalStorage = (data) => {
 }
 
 //请求数据
-const total = ref(0)
-const dataList = ref([]);//空数组接受data数据
+let total = ref(0)
+let dataList = ref([]);//空数组接受data数据
 const fetchData = (page?: number) => {
     // 如果没有指定页码，则使用当前页码
     const curPage = page || queryInfo.currentpage;
@@ -117,7 +117,7 @@ const fetchData = (page?: number) => {
 }
 
 // 实现列表搜索 无搜索状态显示所有数据
-const search = ref('')
+let search = ref('')
 const filterTableData = computed(() =>
     dataList.value.filter(
         (data) =>
@@ -144,8 +144,8 @@ const form = reactive({
 })
 
 let originalData: User | null = null;
-const DialogVisible = ref(false)
-const updateId = ref<number | null>(null);//更新数据的id
+let DialogVisible = ref(false)
+let updateId = ref<number | null>(null);//更新数据的id
 //编辑按钮
 const handleEdit = (index: number, row: User) => {
     DialogVisible.value = true;
@@ -181,7 +181,7 @@ const ChangeDialogVisible = () => {
 }
 
 //取消按钮
-const cls = () => {
+let cls = () => {
     DialogVisible.value = false
     for (let key in form) {
         form[key] = '';
@@ -221,7 +221,7 @@ const handleSingleDelete = (index: number, row: User) => {
 };
 
 //批量删除
-const delsBtn = ref(true);
+let delsBtn = ref(true);
 const multipleSelection = ref<User[]>([])
 const handleSelectionChange = (val: User[]) => {
     multipleSelection.value = val;
@@ -251,8 +251,6 @@ const handleCurrentChange = (newVal: number) => {
     queryInfo.currentpage = newVal
     fetchData()
 }
-
-
 </script>
 
 <style>

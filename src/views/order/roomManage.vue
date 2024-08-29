@@ -91,7 +91,7 @@ import axios from 'axios';
 import { ElMessageBox, ElMessage, FormRules } from 'element-plus';
 import { localStorageService } from "../../assets/api/LocalStroge.js"
 
-const total = ref(0)
+let total = ref(0)
 //数据接口
 interface User {
     id: number,
@@ -128,7 +128,7 @@ const saveToLocalStorage = (data) => {
     localStorageService.save('roomsData', data)
 }
 
-const dataList = ref([]);//空数组接受data数据
+let dataList = ref([]);//空数组接受data数据
 const fetchData = (page?: number) => {
     // 如果没有指定页码，则使用当前页码
     const curPage = page || queryInfo.currentpage;
@@ -142,7 +142,7 @@ const fetchData = (page?: number) => {
 
 
 // 实现列表搜索 无搜索状态显示所有数据
-const search = ref('')
+let search = ref('')
 const filterTableData = computed(() =>
     dataList.value.filter(
         (data) =>
@@ -177,14 +177,14 @@ const rules = reactive<FormRules<typeof form>>(
     })
 
 //新增数据
-const addDialogVisible = ref(false)
+let addDialogVisible = ref(false)
 const add = () => {
     Object.keys(form).forEach(key => {
         form[key] = '';
     });
     addDialogVisible.value = true;
 }
-const addForm = ref(null)
+let addForm = ref(null)
 const addDialog = () => {
     if (addForm.value) {
         addForm.value.validate((valid) => {
@@ -206,8 +206,8 @@ const addDialog = () => {
 
 //编辑按钮
 let originalData: User | null = null;
-const DialogVisible = ref(false)
-const updateId = ref<number | null>(null);//更新数据的id
+let DialogVisible = ref(false)
+let updateId = ref<number | null>(null);//更新数据的id
 const handleEdit = (index: number, row: User) => {
     DialogVisible.value = true;
     updateId.value = row.id
@@ -271,13 +271,11 @@ const handleDelete = (index: number, row: User) => {
     })
 }
 
-
 // 监听 页码值 改变
 const handleCurrentChange = (newVal: number) => {
     queryInfo.currentpage = newVal
     fetchData()
 }
-
 
 </script>
 

@@ -41,26 +41,17 @@
                     </el-button>
                 </p>
             </el-form>
-
-
-
-
         </el-dialog>
     </div>
 </template>
 
 <script setup>
-import { useLoginStore } from "@/stores/index.js"
 import { ElMessage } from 'element-plus'
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { logout } from '../../../stores/localServer';
 
-
-
-const store = useLoginStore();
 const router = useRouter()
-
 const Imgsrc = ref("../public/a.jpg")
 //修改个人信息
 const form = reactive({
@@ -97,21 +88,21 @@ const cls = () => {
 }
 //退出登录
 const quit = () => {
-    ElMessageBox.confirm('确认退出?', '提示', {
+    ElMessage.confirm('确认退出?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning',
-    }).then((result) => {
-        logout
+    }).then(() => {
+        logout()
         router.push("/login")
     }).catch((err) => {
-
+        console.log(err)
     });
 
 }
 
 </script>
-<style  scoped>
+<style scoped>
 .block-col-2 .demonstration {
     display: block;
     color: var(--el-text-color-secondary);

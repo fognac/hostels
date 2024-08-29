@@ -1,5 +1,5 @@
 <template>
-    <div class="box">iobook</div>
+    <div class="box">iobook111111111111111</div>
 </template>
 
 <script>
@@ -10,7 +10,5 @@
     font-size: 16px;
     height: 100%;
     width: 100%;
-
-
 }
 </style>
