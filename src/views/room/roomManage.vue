@@ -1,27 +1,28 @@
 <template>
     <div class='box'>
+        <div class='topTitle'>
+            <el-input v-model="search" style="width: 240px" placeholder="搜索房间号/姓名" clearable size="small" />
+            <el-button :icon="Search" type="primary" size="small" round>搜索</el-button>
+            <el-button type="primary" :icon="Edit" size="small" round @click='add'>新增</el-button>
+        </div>
         <!-- 表单 -->
-        <el-table :data="filterTableData" style="width: 100%  ;min-height: 550px;"
+        <el-table :data="filterTableData" style="width: 100%  ;min-height: 500px;" border
             :default-sort="{ prop: 'roomNo', order: 'ascending' }">
-            <el-table-column label="房号" prop="roomNo" sortable />
-            <el-table-column label="类型" prop="kind" />
-            <el-table-column label="价格" prop="price" sortable />
-            <el-table-column label="设施">
+            <el-table-column label="房号" prop="roomNo" sortable align="center" />
+            <el-table-column label="类型" prop="kind" align="center" />
+            <el-table-column label="价格" prop="price" sortable align="center" />
+            <el-table-column label="设施" align="center">
                 <template #default="scope">
                     <el-tag>{{ scope.row.facility }}</el-tag>
                 </template>
             </el-table-column>
-            <el-table-column align="right">
-                <template #header>
-                    <div class="header-toolbar">
-                        <el-button @click="add" size="small" type="primary">新增</el-button>
-                        <el-input v-model="search" size="small" placeholder="搜索房间号" />
-                    </div>
-                </template>
+            <el-table-column align="center" label="操作">
+
                 <!-- 按钮 -->
                 <template #default="scope">
-                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-                    <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                    <el-button size="small" @click="handleEdit(scope.$index, scope.row)" round>编辑</el-button>
+                    <el-button size="small" type="danger" @click="handleDelete(scope.$index, scope.row)"
+                        round>删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -89,6 +90,7 @@
 import { computed, reactive, ref, onMounted } from 'vue'
 import axios from 'axios';
 import { ElMessageBox, ElMessage, FormRules } from 'element-plus';
+import { Search, Edit } from '@element-plus/icons-vue'
 import { localStorageService } from "../../assets/api/LocalStroge.js"
 
 let total = ref(0)
@@ -279,11 +281,18 @@ const handleCurrentChange = (newVal: number) => {
 
 </script>
 
-<style>
+<style spode>
 .box {
-
     background-color: white;
     height: 100%;
+}
+
+.topTitle {
+    width: 100%;
+    height: 50px;
+    left: 10px;
+    display: flex;
+    align-items: center;
 }
 
 .demo-form-inline .el-input {

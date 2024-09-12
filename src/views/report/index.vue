@@ -77,11 +77,10 @@ import { ref } from 'vue'
 const pic = ref({
     list: [
         { index: 1, src: " ../../../public/pic/item1.jpg" },
-        { index: 2, src: "../../../public/pic/item2.jpg" }, {
-            index: 3, src: "../../../public/pic/item3.jpg"
-        }]
+        { index: 2, src: "../../../public/pic/item2.jpg" },
+        { index: 3, src: "../../../public/pic/item3.jpg" }
+    ]
 })
-
 </script>
 
 <style scoped>
@@ -99,6 +98,7 @@ const pic = ref({
     font-size: 16px;
     flex-direction: column;
     border-radius: 2%;
+    background-color: rgb(220, 212, 212)
 }
 
 /* 上半部分 */

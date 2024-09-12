@@ -11,8 +11,8 @@
                         </el-icon>
                         <span>入住管理</span>
                     </template>
-                    <el-menu-item index="orderManage">预定信息</el-menu-item>
-                    <el-menu-item index="roomManage">房间信息</el-menu-item>
+                    <el-menu-item index="orderManage">订单管理</el-menu-item>
+                    <el-menu-item index="roomManage">房间管理</el-menu-item>
                 </el-sub-menu>
                 <!--旅店管理：操作旅店的基本信息等操作-->
                 <el-sub-menu index="2">
@@ -20,12 +20,12 @@
                         <el-icon>
                             <document />
                         </el-icon>
-                        <span>旅店信息</span>
+                        <span>旅店管理</span>
                     </template>
-                    <el-menu-item index="ioBook">
-                        <span>iobook</span>
+                    <el-menu-item index="baseMsg">
+                        <span>基础信息</span>
                     </el-menu-item>
-                    <el-menu-item index="reservation">222</el-menu-item>
+                    <el-menu-item index="employee">员工管理</el-menu-item>
                 </el-sub-menu>
                 <!-- 报表统计：旅店各项经营数据，及收支情况 -->
                 <el-menu-item index="report">

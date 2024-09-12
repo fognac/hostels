@@ -33,12 +33,13 @@
                     <el-input type="password" v-model="form.Cpassword2" show-password />
                 </el-form-item>
                 <p style="float: right;">
-                    <el-button type="primary" @click="ChangeDialogVisible()">
-                        确认修改
-                    </el-button>
                     <el-button type="primary" @click="cls()">
                         取消
                     </el-button>
+                    <el-button type="primary" @click="ChangeDialogVisible()">
+                        确认修改
+                    </el-button>
+
                 </p>
             </el-form>
         </el-dialog>

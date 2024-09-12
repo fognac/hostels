@@ -37,6 +37,7 @@ let data = Mock.mock({
       custName: "@cname", //客户名字
       roomNo: /^[1-5][0]{1}[0-9]$/, //房号
       tel: /^1(5|3|7|8)[0-9]{9}$/, //随机电话号
+      states: "@pick(['0', '1'])",//0表示已完成，1表示已支付
       sex: "@pick(['男', '女'])",
       times: () =>
         randomDateTime("2024-01-01", "2024-12-31", "00:00:00", "24:00:00"),
@@ -49,7 +50,7 @@ let data = Mock.mock({
 Mock.mock("hotel/order/orderAll/", "post", (options) => {
   //三个参数。第一个：路径，第二个：请求方式post/get，第三个：回调，返回值
   const { page, pageSize } = JSON.parse(options.body)
-  const start = page * pageSize - pageSize
+  const start =(page - 1) * pageSize
   const end = start + pageSize
   const total = data.orders.length
   const slicedOrders = data.orders.slice(start, end)
@@ -59,13 +60,6 @@ Mock.mock("hotel/order/orderAll/", "post", (options) => {
   }
 })
 
-// Mock接口返回所有订单数据
-Mock.mock("hotel/order/all/", "get", () => {
-  return {
-    orders: data.orders,
-    total: data.orders.length,
-  };
-});
 
 //修改数据
 Mock.mock("hotel/order/update/", "post", (config) => {
@@ -98,7 +92,6 @@ Mock.mock("hotel/order/delete/", "post", (options) => {
 
   // 过滤掉需要删除的订单
   data.orders = data.orders.filter((order) => !deletedIds.has(order.id));
-
   return {
     success: true,
   };

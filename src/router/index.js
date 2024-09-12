@@ -26,7 +26,7 @@ const router = createRouter({
           //房间
           path: "roomManage",
           name: "roomManage",
-          component: () => import("@/views/order/roomManage.vue"),
+          component: () => import("@/views/room/roomManage.vue"),
         },
 
         {
@@ -36,15 +36,15 @@ const router = createRouter({
           children: [
             {
               //预约
-              path: "/reservation",
-              name: "reservation",
-              component: () => import("@/views/lending/reservation.vue"),
+              path: "/employee",
+              name: "employee",
+              component: () => import("@/views/lending/employee.vue"),
             },
             {
               //借书
-              path: "/ioBook",
-              name: "ioBook",
-              component: () => import("@/views/lending/ioBook.vue"),
+              path: "/baseMsg",
+              name: "baseMsg",
+              component: () => import("@/views/lending/baseMsg.vue"),
             },
           ],
         },

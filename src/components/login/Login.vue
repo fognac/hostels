@@ -1,3 +1,50 @@
+<template>
+  <div class="box">
+    <div class="content">
+      <span class="icon" v-show="!changForm" @click="toLogin()">
+        <el-icon>
+          <ArrowLeft />
+        </el-icon>返回登录
+      </span>
+      <div class="forms">
+        <!--登录表单-->
+        <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="65px" class="demo-ruleForm"
+          :hide-required-asterisk="true" autocomplete="true" v-if="changForm">
+          <el-form-item label="用户名" prop="user">
+            <el-input v-model="ruleForm.user" type="text" autocomplete="off" placeholder="admin" />
+          </el-form-item>
+          <el-form-item label="密码" prop="pass">
+            <el-input v-model="ruleForm.pass" type="password" autocomplete="off" placeholder="a123456" show-password />
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary" @click="submitForm(ruleFormRef)">登录</el-button>
+            <el-button @click="goRegist()">注册</el-button>
+          </el-form-item>
+        </el-form>
+
+        <!--注册表单-->
+        <el-form ref="rgtFormRef" :model="ruleForm" :rules="rules" label-width="70px" class="demo-ruleForm"
+          :hide-required-asterisk="true" v-else>
+          <el-form-item label="用户名" prop="user" class='textcol'>
+            <el-input v-model="ruleForm.user" type="text" />
+          </el-form-item>
+          <el-form-item label="密码" prop="pass" style='color: white;'>
+            <el-input v-model="ruleForm.pass" type="password" />
+          </el-form-item>
+          <el-form-item label="确认密码" prop="pass2" class='textcol'>
+            <el-input v-model="ruleForm.pass2" type="password" id="passEsg" />
+          </el-form-item>
+
+          <el-form-item>
+            <el-button type="primary" @click="register(rgtFormRef)" class="rgsbtn">注册</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </div>
+  </div>
+</template>
+
 <script lang="ts" setup>
 import { reactive, ref } from "vue"
 import { ElMessage, FormInstance, FormRules } from "element-plus"
@@ -112,52 +159,7 @@ const toLogin = () => {
 }
 </script>
 
-<template>
-  <div class="box">
-    <div class="content">
-      <span class="icon" v-show="!changForm" @click="toLogin()">
-        <el-icon>
-          <ArrowLeft />
-        </el-icon>返回登录
-      </span>
-      <div class="forms">
-        <!--登录表单-->
-        <el-form ref="ruleFormRef" :model="ruleForm" :rules="rules" label-width="65px" class="demo-ruleForm"
-          :hide-required-asterisk="true" autocomplete="true" v-if="changForm">
-          <el-form-item label="用户名" prop="user">
-            <el-input v-model="ruleForm.user" type="text" autocomplete="off" placeholder="admin" />
-          </el-form-item>
-          <el-form-item label="密码" prop="pass">
-            <el-input v-model="ruleForm.pass" type="password" autocomplete="off" placeholder="a123456" show-password />
-          </el-form-item>
 
-          <el-form-item>
-            <el-button type="primary" @click="submitForm(ruleFormRef)">登录</el-button>
-            <el-button @click="goRegist()">注册</el-button>
-          </el-form-item>
-        </el-form>
-
-        <!--注册表单-->
-        <el-form ref="rgtFormRef" :model="ruleForm" :rules="rules" label-width="70px" class="demo-ruleForm"
-          :hide-required-asterisk="true" v-else>
-          <el-form-item label="用户名" prop="user" class='textcol'>
-            <el-input v-model="ruleForm.user" type="text" />
-          </el-form-item>
-          <el-form-item label="密码" prop="pass" style='color: white;'>
-            <el-input v-model="ruleForm.pass" type="password" />
-          </el-form-item>
-          <el-form-item label="确认密码" prop="pass2" class='textcol'>
-            <el-input v-model="ruleForm.pass2" type="password" id="passEsg" />
-          </el-form-item>
-
-          <el-form-item>
-            <el-button type="primary" @click="register(rgtFormRef)" class="rgsbtn">注册</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </div>
-  </div>
-</template>
 
 <style scoped>
 body,
@@ -176,11 +178,6 @@ html {
   width: 400px;
   height: 270px;
   position: absolute;
-  /* top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto; */
   background-color: rgba(255, 255, 255, 0.8);
   box-shadow: 10px;
   box-sizing: border-box;
