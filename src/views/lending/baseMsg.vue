@@ -50,9 +50,11 @@
                 </el-form>
             </div>
             <div class="image-upload-container">
+                <p style='text-align: center;'>旅店宣传照片</p>
                 <el-upload class="image-uploader" action="http://localhost:5173/baseMsg" :on-remove="handleRemove"
                     :before-remove="beforeRemove" :limit="4" :on-exceed="handleExceed" v-model:file-list="imageList"
-                    list-type="picture-card" v-if="imageList.length < 5" :on-success="onSuccess">
+                    list-type="picture-card" v-if="imageList.length < 5" :on-success="onSuccess"
+                    :on-progress='onprogress'>
                     <i class="el-icon-plus"></i>
                 </el-upload>
             </div>
@@ -160,6 +162,8 @@ const handleExceed = () => {
     alert(`上传文件达到上限`);
 }
 
+
+//无效函数
 const onSuccess = (file) => {
     console.log('上传成功');
     imageList.value.push(file);
