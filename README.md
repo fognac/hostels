@@ -1,14 +1,16 @@
 # vue3-demo
 
-This template should help get you started developing with Vue 3 in Vite.
+项目介绍： 实现后台对旅店的基础管理。订单管理，客房管理，员工管理，基础信息管理和旅店各项数据及报表
+核心框架：Vue3+JavaScript+Element-UI+Mock.js
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
 ## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+    "axios": "^1.7.2",
+    "chart.js": "^4.4.3",
+    "element-plus": "^2.5.3",
+    "mockjs": "^1.1.0",
+    "pinia": "^2.1.7",
+    "vue": "^3.4.15",
 
 ## Project Setup
 
