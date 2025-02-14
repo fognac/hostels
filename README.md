@@ -8,7 +8,7 @@ Vue3+JavaScript+Mock.js+Axios
 
 ## 示例图
 <img src="https://github.com/user-attachments/assets/b0d92421-20d9-4596-bdf8-51ee1f3c9ca7" alt="示例图片" width="450" height="300">
-<img src="https://github.com/user-attachments/assets/6eb1513c-69ff-4dfe-8ddd-0754941f135f" alt="示例图片" width="450" height="300">
+<img src="https://github.com/user-attachments/assets/85b1b5df-0476-42ad-a71d-ff90423e320e" alt="示例图片" width="450" height="300">
 
 ## 在线体验
 
